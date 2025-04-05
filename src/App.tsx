@@ -6,7 +6,7 @@ import DataFetcher from "./services/DataFetcher";
 
 export function App() {
   return (
-    <div className='app w-screen h-screen'>
+    <div className='app'>
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
