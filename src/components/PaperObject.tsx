@@ -30,7 +30,7 @@ const PaperObject: React.FC<PaperObjectProps> = ({data}) => {
                         </div>
                     }
                 </div>
-                <h1 className="text-4xl px-4">
+                <h1 className="text-3xl px-4">
                     {data.title_org}
                 </h1>
             </div>

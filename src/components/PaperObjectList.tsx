@@ -1,21 +1,27 @@
 import useItemStore from "@/stores/useItemStore"
 import PaperObject from "./PaperObject"
+import { Loader } from "lucide-react"
 
 interface PaperObjectListProps {
 
 }
 
 const PaperObjectList: React.FC<PaperObjectListProps> = () => {
-    const {items} = useItemStore()
+    const { items, loading } = useItemStore()
 
     return (
         <div className="paper-object-list-container">
             <div className="paper-object-list flex flex-col gap-4">
-                {items.map(item => {
+                {items.map((item:any, index:number) => {
                     return (
-                        <PaperObject data={item} key={item.doi} />
+                        <PaperObject data={item} key={index} />
                     )
                 })}
+                {loading && 
+                    <div className="flex items-center justify-center p-4 bg-gray-100">
+                        <Loader className="h-4 w-4 animate-spin" />
+                    </div>
+                }
             </div>
         </div>
     )
