@@ -14,7 +14,9 @@ const DataFetcher: React.FC = () => {
                 const { data, error } = await supabase
                     .from('n8n_table')
                     .select('*')
-                    .range(page * 5, page * 5 + 4)
+                    .eq('ai_summary_done', true)
+                    .order('created_at', { ascending: false }) 
+                    .range(page * 5, page * 5 + 4);
 
                 if (error) throw error
                 if (data.length) appendItems(data)
