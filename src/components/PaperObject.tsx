@@ -1,5 +1,6 @@
 import { Loader } from "lucide-react"
 import { useState } from "react"
+import PaperObjectCreator from "./PaperObjectCreator"
 
 interface PaperObjectProps {
     data: any
@@ -30,9 +31,19 @@ const PaperObject: React.FC<PaperObjectProps> = ({data}) => {
                         </div>
                     }
                 </div>
-                <h1 className="text-3xl px-4">
-                    {data.ai_headline}
-                </h1>
+                <div className="data-container px-4 flex flex-col gap-2">
+                    <h1 className="text-3xl">
+                        {data.ai_headline}
+                    </h1>
+                    <div className="meta-data text-xs leading-tight">
+                        <div>
+                            Fetched at: {data.created_at}
+                        </div>
+                        <div>
+                            <PaperObjectCreator creator={data.creator} />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )
