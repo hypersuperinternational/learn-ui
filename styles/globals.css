@@ -75,7 +75,7 @@
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -114,6 +114,8 @@
   --color-sidebar: var(--sidebar-background);
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  --color-learn-main: #F9F9F9;
 
   @keyframes accordion-down {
     from {
