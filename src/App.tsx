@@ -1,6 +1,7 @@
 import "./index.css";
 import { Routes, Route } from 'react-router'
 import Home from "./views/Home";
+import DataFetcher from "./services/DataFetcher";
 
 
 export function App() {
@@ -9,6 +10,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
+      <DataFetcher />
     </div>
   );
 }
