@@ -6,7 +6,7 @@ import DataFetcher from "./services/DataFetcher";
 
 export function App() {
   return (
-    <div className='app'>
+    <div className='app bg-learn-main'>
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>

@@ -1,5 +1,11 @@
 # bun-react-tailwind-shadcn-template
 
+To replace pico site:
+```
+rsync -rv dist/ pgs.sh:/learn
+```
+
+
 To install dependencies:
 
 ```bash

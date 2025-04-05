@@ -5,21 +5,31 @@ import { useEffect, useRef, useState } from "react"
 const DataFetcher: React.FC = () => {
     const { loading, appendItems, setLoading } = useItemStore()
     const [page, setPage] = useState<number>(0)
+    const [lastFetchedPage, setLastFetchedPage] = useState<number | null>(null);
     const observerRef = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
+        if (page === lastFetchedPage || loading) return
+        
         const fetchData = async () => {
+            console.log("Loading page: ", page)
             setLoading(true)
             try {
+                const startIndex = page * 5
+                const endIndex = startIndex + 4
                 const { data, error } = await supabase
                     .from('n8n_table')
                     .select('*')
                     .eq('ai_summary_done', true)
                     .order('created_at', { ascending: false }) 
-                    .range(page * 5, page * 5 + 4);
+                    .range(startIndex, endIndex)
 
                 if (error) throw error
-                if (data.length) appendItems(data)
+                if (data.length) {
+                    console.log(data)
+                    appendItems(data)
+                    setLastFetchedPage(page)
+                }
             } catch (err) {
                 console.error('Error fetching data:', err)
             } finally {

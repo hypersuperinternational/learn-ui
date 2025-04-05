@@ -1,12 +1,14 @@
 import { Loader } from "lucide-react"
 import { useState } from "react"
 import PaperObjectCreator from "./PaperObjectCreator"
+import useUiStore from "@/stores/useUiStore"
 
 interface PaperObjectProps {
     data: any
 }
 
 const PaperObject: React.FC<PaperObjectProps> = ({data}) => {
+    const { aiHeadlines } = useUiStore()
     const [loadingImage, setLoadingImage] = useState<boolean>(true)
 
     return (
@@ -33,7 +35,10 @@ const PaperObject: React.FC<PaperObjectProps> = ({data}) => {
                 </div>
                 <div className="data-container px-4 flex flex-col gap-2">
                     <h1 className="text-3xl leading-none">
-                        {data.ai_headline}
+                        {aiHeadlines
+                            ? data.ai_headline
+                            : data.title_org
+                        }
                     </h1>
                     <div className="meta-data text-xs leading-tight text-black/30">
                         <div>

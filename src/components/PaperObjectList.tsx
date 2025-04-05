@@ -18,7 +18,7 @@ const PaperObjectList: React.FC<PaperObjectListProps> = () => {
                     )
                 })}
                 {loading && 
-                    <div className="flex items-center justify-center p-4 bg-gray-100">
+                    <div className="flex items-center justify-center p-4">
                         <Loader className="h-4 w-4 animate-spin" />
                     </div>
                 }
