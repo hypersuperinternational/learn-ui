@@ -31,7 +31,7 @@ const PaperObject: React.FC<PaperObjectProps> = ({data}) => {
                     }
                 </div>
                 <h1 className="text-3xl px-4">
-                    {data.title_org}
+                    {data.ai_headline}
                 </h1>
             </div>
         </div>
