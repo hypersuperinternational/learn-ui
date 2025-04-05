@@ -10,7 +10,7 @@ const PaperObjectList: React.FC<PaperObjectListProps> = () => {
     const { items, loading } = useItemStore()
 
     return (
-        <div className="paper-object-list-container">
+        <div className="paper-object-list-container relative w-full h-full">
             <div className="paper-object-list flex flex-col gap-4">
                 {items.map((item:any, index:number) => {
                     return (
