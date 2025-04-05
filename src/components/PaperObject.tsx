@@ -11,7 +11,7 @@ const PaperObject: React.FC<PaperObjectProps> = ({data}) => {
 
     return (
         <div className="paper-object-container p-4">
-            <div className="paper-object flex flex-col gap-2">
+            <div className="paper-object flex flex-col gap-4">
                 <div className="image-container relative w-full rounded-3xl overflow-hidden aspect-square">
                     {(loadingImage && data.image_url) && (
                         <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
@@ -32,10 +32,10 @@ const PaperObject: React.FC<PaperObjectProps> = ({data}) => {
                     }
                 </div>
                 <div className="data-container px-4 flex flex-col gap-2">
-                    <h1 className="text-3xl">
+                    <h1 className="text-3xl leading-none">
                         {data.ai_headline}
                     </h1>
-                    <div className="meta-data text-xs leading-tight">
+                    <div className="meta-data text-xs leading-tight text-black/30">
                         <div>
                             Fetched at: {data.created_at}
                         </div>
