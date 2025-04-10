@@ -24,18 +24,22 @@ const PaperObjectDetail: React.FC<PaperObjectDetailProps> = ({ data, onClose }) 
     }
 
     useEffect(() => {
+        console.log(data.ai_key_takeaways)
         window.addEventListener('keydown', handleKeyPress, true)
-        return () => window.removeEventListener('keydown', handleKeyPress, true)
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress, true)
+        }
     }, [])
 
     return (
         <motion.div 
-            className='paper-object-detail-container fixed inset-0 z-20 bg-white'
+            className='paper-object-detail-container fixed w-screen h-screen overflow-scroll inset-0 pb-8 z-20 bg-white'
+            onScroll={e => e.stopPropagation()}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.1 }}>
-            <div className='paper-object-detail relative flex flex-col gap-2'>
+            <div className='paper-object-detail relative flex flex-col gap-4'>
                 <motion.img
                     layoutId={`image-${data.id}`}
                     src={data.image_url}
@@ -44,7 +48,7 @@ const PaperObjectDetail: React.FC<PaperObjectDetailProps> = ({ data, onClose }) 
                     className="w-full aspect-square object-cover"
                 />
                 <motion.h1 
-                    className="text-3xl leading-none py-4 px-8"
+                    className="text-3xl leading-none px-8"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -55,9 +59,22 @@ const PaperObjectDetail: React.FC<PaperObjectDetailProps> = ({ data, onClose }) 
                         : data.title_org
                     }
                 </motion.h1>
+                <motion.div
+                    className="flex flex-col gap-2 px-8">
+                    {data.ai_key_takeaways.map((keyTakeaway: any, index: number) => {
+                        return (
+                            <div className="key-takeaway rounded-md border border-gray-100 p-4" key={index}>
+                                {typeof keyTakeaway.text === 'string'
+                                    ? keyTakeaway.text
+                                    : keyTakeaway.text.main
+                                }
+                            </div>
+                        )
+                    })}
+                </motion.div>
 
 
-                <Button variant="ghost" className="absolute top-2 right-2" onClick={onClose}>
+                <Button variant="ghost" className="fixed top-2 right-2" onClick={onClose}>
                     <XCircle className="size-4" />
                 </Button>
             </div>
