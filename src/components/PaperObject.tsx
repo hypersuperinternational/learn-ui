@@ -28,7 +28,7 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
                             layoutId={`image-${data.id}`}
                             src={data.image_url}
                             alt=""
-                            className={`w-full h-full ${loadingImage ? 'opacity-0' : 'opacity-100'}`}
+                            className={`w-full h-full object-cover ${loadingImage ? 'opacity-0' : 'opacity-100'}`}
                             onClick={() => onImageClick(data)}
                             onLoad={() => setLoadingImage(false)}
                             loading="lazy"
