@@ -1,11 +1,16 @@
 import { supabase } from "@/lib/supabase"
 import useItemStore from "@/stores/useItemStore"
+import useUiStore from "@/stores/useUiStore"
 import { useEffect, useRef, useState } from "react"
 
 const DataFetcher: React.FC = () => {
-    const { loading, appendItems, setLoading } = useItemStore()
+    const { loading, appendItems, setItems, setLoading } = useItemStore()
+    const { paperDatabase } = useUiStore()
+
     const [page, setPage] = useState<number>(0)
-    const [lastFetchedPage, setLastFetchedPage] = useState<number | null>(null);
+    const [lastFetchedPage, setLastFetchedPage] = useState<number | null>(null)
+
+    const observerInstance = useRef<IntersectionObserver | null>(null)
     const observerRef = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
@@ -18,7 +23,7 @@ const DataFetcher: React.FC = () => {
                 const startIndex = page * 5
                 const endIndex = startIndex + 4
                 const { data, error } = await supabase
-                    .from('n8n_table')
+                    .from(paperDatabase)
                     .select('*')
                     .eq('ai_summary_done', true)
                     .order('created_at', { ascending: false }) 
@@ -38,19 +43,32 @@ const DataFetcher: React.FC = () => {
         }
 
         fetchData()
-    }, [page])
+    }, [page, lastFetchedPage])
+
+    useEffect(() => {
+        console.log('Paper database changed')
+        setItems([])
+        if (observerInstance.current) {
+            observerInstance.current?.disconnect()
+        }
+        setPage(0)
+        setLastFetchedPage(null)
+    }, [paperDatabase])
+    
 
     useEffect(() => {
         if (!observerRef.current) return
 
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && !loading) {
+        const _observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !loading && page === lastFetchedPage) {
                 setPage((prev) => prev + 1)
             }
         })
 
-        observer.observe(observerRef.current)
-        return () => observer.disconnect()
+        observerInstance.current = _observer
+
+        _observer.observe(observerRef.current)
+        return () => _observer.disconnect()
     }, [loading])
 
     return (
