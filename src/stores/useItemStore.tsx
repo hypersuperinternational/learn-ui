@@ -13,8 +13,8 @@ const useItemStore = create<ItemStoreProps>((set) => ({
   loading: false,
   setItems: (items: any[]) => set({ items }),
   appendItems: (newItems) => set((state) => {
-    const existingIds = new Set(state.items.map((item) => item.doi));
-    const filteredItems = newItems.filter((item) => !existingIds.has(item.doi));
+    const existingIds = new Set(state.items.map((item) => item.id));
+    const filteredItems = newItems.filter((item) => !existingIds.has(item.id));
     return { items: [...state.items, ...filteredItems] };
   }),
   setLoading: (loading: boolean) => set({ loading })

@@ -1,6 +1,10 @@
+import { Loader } from "lucide-react"
+
 import useItemStore from "@/stores/useItemStore"
 import PaperObject from "./PaperObject"
-import { Loader } from "lucide-react"
+import PaperObjectDetail from "./PaperObjectDetail"
+import { useEffect, useState } from "react"
+import { AnimatePresence } from "framer-motion"
 
 interface PaperObjectListProps {
 
@@ -8,13 +12,18 @@ interface PaperObjectListProps {
 
 const PaperObjectList: React.FC<PaperObjectListProps> = () => {
     const { items, loading } = useItemStore()
+    const [selectedItem, setSelectedItem] = useState<any | null>(null)
+
+    useEffect(() => {
+        console.log(selectedItem)
+    }, [selectedItem])
 
     return (
         <div className="paper-object-list-container relative w-full h-full">
             <div className="paper-object-list flex flex-col gap-4">
                 {items.map((item:any, index:number) => {
                     return (
-                        <PaperObject data={item} key={index} />
+                        <PaperObject data={item} onImageClick={setSelectedItem} key={index} />
                     )
                 })}
                 {loading && 
@@ -23,6 +32,14 @@ const PaperObjectList: React.FC<PaperObjectListProps> = () => {
                     </div>
                 }
             </div>
+            <AnimatePresence>
+                {selectedItem && (
+                    <PaperObjectDetail
+                        data={selectedItem}
+                        onClose={() => setSelectedItem(null)}
+                    />
+                )}
+            </AnimatePresence>
         </div>
     )
 }

@@ -1,13 +1,16 @@
-import { Loader } from "lucide-react"
 import { useState } from "react"
+import { motion } from "framer-motion"
+import { Loader } from "lucide-react"
+
 import PaperObjectCreator from "./PaperObjectCreator"
 import useUiStore from "@/stores/useUiStore"
 
 interface PaperObjectProps {
     data: any
+    onImageClick: (data: any) => void
 }
 
-const PaperObject: React.FC<PaperObjectProps> = ({data}) => {
+const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
     const { aiHeadlines } = useUiStore()
     const [loadingImage, setLoadingImage] = useState<boolean>(true)
 
@@ -21,10 +24,12 @@ const PaperObject: React.FC<PaperObjectProps> = ({data}) => {
                         </div>
                     )}
                     {data.image_url
-                        ? <img
+                        ? <motion.img
+                            layoutId={`image-${data.id}`}
                             src={data.image_url}
                             alt=""
                             className={`w-full h-full ${loadingImage ? 'opacity-0' : 'opacity-100'}`}
+                            onClick={() => onImageClick(data)}
                             onLoad={() => setLoadingImage(false)}
                             loading="lazy"
                         />

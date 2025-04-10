@@ -9,9 +9,7 @@ interface TopbarProps {
 
 const Topbar: React.FC<TopbarProps> = () => {
     const { aiHeadlines, setAiHeadlines } = useUiStore()
-    useEffect(() => {
-        console.log('ai headlines: ', aiHeadlines)
-    }, [aiHeadlines])
+    
     return (
         <div className="top-bar-container fixed z-10 top-0 left-0 w-full bg-white/90 backdrop-blur-md">
             <div className="top-bar p-2 px-4 flex items-center justify-between">
