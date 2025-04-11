@@ -13,10 +13,6 @@ const PaperObjectList: React.FC<PaperObjectListProps> = () => {
     const { items, loading } = useItemStore()
     const [selectedItem, setSelectedItem] = useState<any | null>(null)
 
-    useEffect(() => {
-        console.log(selectedItem)
-    }, [selectedItem])
-
     return (
         <div className="paper-object-list-container relative w-full h-full">
             <div className="paper-object-list flex flex-col gap-4">

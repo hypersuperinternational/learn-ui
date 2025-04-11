@@ -49,27 +49,32 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
     }
 
     const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-        touchStartY.current = e.touches[0].clientY;
+        touchStartY.current = e.touches[0].clientY
     };
     
     const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-        if (!touchStartY.current) return;
-    
-        const currentY = e.touches[0].clientY;
-        const deltaY = currentY - touchStartY.current;
+        if (!touchStartY.current) return
+        e.stopPropagation()
+        const currentY = e.touches[0].clientY
+        const deltaY = Math.abs(currentY) - Math.abs(touchStartY.current)
+
+        console.log('current ', currentY)
+        console.log('delta ', deltaY)
+        
     
         const target = e.currentTarget;
-        if (target.scrollTop === 0 && deltaY > 0) {
-            setTouchOffsetY(deltaY);
+        console.log('scroll top', target.scrollTop)
+        if (target.scrollTop <= 0 && deltaY > 0) {
+            setTouchOffsetY(deltaY)
         }
     };
     
     const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
         if (touchOffsetY > 80) {
-            closeOverlay();
+            closeOverlay()
         }
-        setTouchOffsetY(0);
-        touchStartY.current = null;
+        setTouchOffsetY(0)
+        touchStartY.current = null
     };
     
     const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {

@@ -8,10 +8,6 @@ interface TopbarProps {
 
 const Topbar: React.FC<TopbarProps> = () => {
     const { paperOpen } = useUiStore()
-
-    useEffect(() => {
-        console.log('paper open ', paperOpen)
-    }, [paperOpen])
     
     return (
         <div className={`top-bar-container fixed z-30 left-0 w-full p-2 transition-all duration-300 ease-out-learn

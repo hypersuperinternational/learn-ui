@@ -18,7 +18,6 @@ const DataFetcher: React.FC = () => {
         if (page === lastFetchedPage || loading) return
         
         const fetchData = async () => {
-            console.log("Loading page: ", page)
             setLoading(true)
             try {
                 const startIndex = page * 5
@@ -32,7 +31,6 @@ const DataFetcher: React.FC = () => {
 
                 if (error) throw error
                 if (data.length) {
-                    console.log(data)
                     appendItems(data)
                     setLastFetchedPage(page)
                 }
@@ -47,7 +45,6 @@ const DataFetcher: React.FC = () => {
     }, [page, lastFetchedPage])
 
     useEffect(() => {
-        console.log('Paper database changed')
         setItems([])
         if (observerInstance.current) {
             observerInstance.current?.disconnect()
