@@ -61,6 +61,8 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
         const target = e.currentTarget;
         // Only apply offset if at the top
         if (target.scrollTop === 0 && deltaY > 0) {
+            e.preventDefault(); // 👈 must do this for iOS
+            e.stopPropagation(); // 👈 helps prevent bubbling
             setTouchOffsetY(deltaY);
         }
     };
@@ -141,7 +143,8 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
                     ${!overlayTop && 'hidden'}
                     ${expanded ? 'duration-300' : 'duration-300'}`}
                 style={{ 
-                    top: expanded ? `${touchOffsetY}px` : `${overlayTop}px` ,
+                    top: expanded ? `${touchOffsetY}px` : `${overlayTop}px`,
+                    touchAction: 'none',
                     WebkitOverflowScrolling: 'touch'
                 }}
                 onTouchStart={handleTouchStart}
