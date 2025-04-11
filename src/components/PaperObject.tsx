@@ -141,7 +141,6 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
                     ${expanded ? 'duration-300' : 'duration-300'}`}
                 style={{ 
                     top: expanded ? `${touchOffsetY}px` : `${overlayTop}px`,
-                    touchAction: 'none',
                     WebkitOverflowScrolling: 'touch'
                 }}
                 onTouchStart={handleTouchStart}
