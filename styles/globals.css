@@ -136,6 +136,12 @@
   }
 }
 
+@layer utilities {
+  .ease-out-learn {
+    transition-timing-function: cubic-bezier(0.250, 0.000, 0.000, 1.000);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -1,10 +1,9 @@
-import { AnimatePresence } from 'motion/react'
+import { useEffect, useState } from "react"
 import { Loader } from "lucide-react"
 
 import useItemStore from "@/stores/useItemStore"
 import PaperObject from "./PaperObject"
 import PaperObjectDetail from "./PaperObjectDetail"
-import { useEffect, useState } from "react"
 
 interface PaperObjectListProps {
 
@@ -32,14 +31,12 @@ const PaperObjectList: React.FC<PaperObjectListProps> = () => {
                     </div>
                 }
             </div>
-            <AnimatePresence>
-                {selectedItem && (
-                    <PaperObjectDetail
-                        data={selectedItem}
-                        onClose={() => setSelectedItem(null)}
-                    />
-                )}
-            </AnimatePresence>
+            {selectedItem && (
+                <PaperObjectDetail
+                    data={selectedItem}
+                    onClose={() => setSelectedItem(null)}
+                />
+            )}
         </div>
     )
 }
