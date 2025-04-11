@@ -56,14 +56,9 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
         if (!touchStartY.current) return
         e.stopPropagation()
         const currentY = e.touches[0].clientY
-        const deltaY = Math.abs(currentY) - Math.abs(touchStartY.current)
-
-        console.log('current ', currentY)
-        console.log('delta ', deltaY)
-        
+        const deltaY = Math.abs(currentY) - Math.abs(touchStartY.current)        
     
         const target = e.currentTarget;
-        console.log('scroll top', target.scrollTop)
         if (target.scrollTop <= 0 && deltaY > 0) {
             setTouchOffsetY(deltaY)
         }
