@@ -96,26 +96,28 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
     return (
         <div className="paper-object-container">
             <div className="paper-object flex flex-col gap-4" ref={paperObjectRef}>
-                <div className="image-container relative w-full p-4 pb-0 overflow-hidden">
-                    {(loadingImage && data.image_url) && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-                            <Loader className="h-4 w-4 animate-spin" />
-                        </div>
-                    )}
-                    {data.image_url
-                        ? <img
-                            src={data.image_url}
-                            alt=""
-                            className={`relative w-full aspect-square object-cover rounded-3xl ${loadingImage ? 'opacity-0' : 'opacity-100'}`}
-                            onClick={handleImageClick}
-                            onLoad={() => setLoadingImage(false)}
-                            loading="lazy"
-                        />
-                        : <div className="w-full h-full bg-gray-200 flex justify-center items-center text-xs text-black/30">
-                            No image
-                        </div>
-                    }
-                </div>  
+                <div className="image-container relative w-full p-4 pb-0">
+                    <div className={`image-container-inner overflow-hidden aspect-square rounded-3xl`}>
+                        {(loadingImage && data.image_url) && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                                <Loader className="h-4 w-4 animate-spin" />
+                            </div>
+                        )}
+                        {data.image_url
+                            ? <img
+                                src={data.image_url}
+                                alt=""
+                                className={`relative w-full h-full object-cover ${loadingImage ? 'opacity-0' : 'opacity-100'}`}
+                                onClick={handleImageClick}
+                                onLoad={() => setLoadingImage(false)}
+                                loading="lazy"
+                            />
+                            : <div className="w-full h-full bg-gray-200 flex justify-center items-center text-xs text-black/30">
+                                No image
+                            </div>
+                        }
+                    </div>
+                </div>
                 <div className="data-container px-6 flex flex-col gap-2">
                     <h1 className="text-3xl leading-none font-medium">
                         {aiHeadlines
@@ -135,11 +137,11 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
             </div>
 
             <div 
-                className={`paper-object-detail-overlay fixed pb-4 overflow-y-auto overscroll-contain touch-action-none w-screen max-h-screen flex flex-col gap-4 left-0 z-20 ease-out-learn transition-all
+                className={`paper-object-detail-overlay fixed pb-4 overflow-y-auto overscroll-contain w-screen max-h-screen flex flex-col gap-4 left-0 z-20 ease-out-learn transition-all
                     ${!overlayTop && 'hidden'}
                     ${expanded ? 'duration-300' : 'duration-300'}`}
                 style={{ 
-                    top: expanded ? `${touchOffsetY}px` : `${overlayTop}px`,
+                    top: expanded ? `${touchOffsetY}px` : `${overlayTop}px` ,
                     WebkitOverflowScrolling: 'touch'
                 }}
                 onTouchStart={handleTouchStart}
@@ -150,26 +152,29 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
                         onTransitionEnd={handleTransitionEnd}>
                         <div className={`image-container relative w-full overflow-hidden bg-learn-main ease-out-learn shrink-0
                             ${expanded ? 'p-0 duration-300' : 'p-4 pb-0 duration-300'}`}>
-                            {(loadingImage && data.image_url) && (
-                                <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-                                    <Loader className="h-4 w-4 animate-spin" />
-                                </div>
-                            )}
-                            {data.image_url
-                                ? <img
-                                    src={data.image_url}
-                                    alt=""
-                                    className={`relative w-full h-full object-cover ease-out-learn
-                                        ${loadingImage ? 'opacity-0' : 'opacity-100'}
-                                        ${expanded ? 'rounded-none aspect-[2/3] duration-300' : 'rounded-3xl aspect-square duration-300'}`}
-                                    onClick={handleImageClick}
-                                    onLoad={() => setLoadingImage(false)}
-                                    loading="lazy"
-                                />
-                                : <div className="w-full h-full bg-gray-200 flex justify-center items-center text-xs text-black/30">
-                                    No image
-                                </div>
-                            }
+                            <div className={`image-container-inner overflow-hidden ease-out-learn
+                                ${expanded ? 'aspect-[2/3] rounded-none duration-300' : 'aspect-square rounded-3xl duration-300'}`}>
+                                {(loadingImage && data.image_url) && (
+                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                                        <Loader className="h-4 w-4 animate-spin" />
+                                    </div>
+                                )}
+                                {data.image_url
+                                    ? <img
+                                        src={data.image_url}
+                                        alt=""
+                                        className={`relative w-full h-full object-cover ease-out-learn
+                                            ${loadingImage ? 'opacity-0' : 'opacity-100'}
+                                            ${expanded ? 'rounded-none duration-300' : 'rounded-3xl duration-300'}`}
+                                        onClick={handleImageClick}
+                                        onLoad={() => setLoadingImage(false)}
+                                        loading="lazy"
+                                    />
+                                    : <div className="w-full h-full bg-gray-200 flex justify-center items-center text-xs text-black/30">
+                                        No image
+                                    </div>
+                                }
+                            </div>
                         </div>
                         <div className={`data-container px-6 flex flex-col gap-2 ease-out-learn
                             ${expanded ? 'bg-learn-main duration-100' : 'bg-transparent duration-300'}`}>
