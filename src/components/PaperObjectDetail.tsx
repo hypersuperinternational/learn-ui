@@ -1,7 +1,8 @@
-import { motion } from "framer-motion"
 import { useEffect } from "react"
-import { Button } from "./ui/button"
+import { motion } from 'motion/react'
 import { XCircle } from "lucide-react"
+
+import { Button } from "./ui/button"
 import useUiStore from "@/stores/useUiStore"
 
 interface PaperObjectDetailProps {

@@ -1,7 +1,8 @@
+import { useEffect, useRef, useState } from "react"
 import { supabase } from "@/lib/supabase"
+
 import useItemStore from "@/stores/useItemStore"
 import useUiStore from "@/stores/useUiStore"
-import { useEffect, useRef, useState } from "react"
 
 const DataFetcher: React.FC = () => {
     const { loading, appendItems, setItems, setLoading } = useItemStore()

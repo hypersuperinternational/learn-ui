@@ -1,10 +1,10 @@
+import { AnimatePresence } from 'motion/react'
 import { Loader } from "lucide-react"
 
 import useItemStore from "@/stores/useItemStore"
 import PaperObject from "./PaperObject"
 import PaperObjectDetail from "./PaperObjectDetail"
 import { useEffect, useState } from "react"
-import { AnimatePresence } from "framer-motion"
 
 interface PaperObjectListProps {
 
