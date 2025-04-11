@@ -135,7 +135,7 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
             </div>
 
             <div 
-                className={`paper-object-detail-overlay fixed pb-4 overflow-y-auto overscroll-contain w-screen max-h-screen flex flex-col gap-4 left-0 z-20 ease-out-learn transition-all
+                className={`paper-object-detail-overlay fixed pb-4 overflow-y-auto overscroll-contain touch-action-none w-screen max-h-screen flex flex-col gap-4 left-0 z-20 ease-out-learn transition-all
                     ${!overlayTop && 'hidden'}
                     ${expanded ? 'duration-300' : 'duration-300'}`}
                 style={{ 
