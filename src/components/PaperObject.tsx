@@ -4,22 +4,24 @@ import { Loader, XCircle } from "lucide-react"
 import PaperObjectCreator from "./PaperObjectCreator"
 import useUiStore from "@/stores/useUiStore"
 import { Button } from "./ui/button"
+import useTouchSwipe from "@/hooks/useTouchSwipeDown"
+import { scrollToTop } from "@/lib/utils"
 
 interface PaperObjectProps {
     data: any
-    onImageClick: (data: any) => void
 }
 
-const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
-    const { aiHeadlines, paperOpen, setPaperOpen } = useUiStore()
+const PaperObject: React.FC<PaperObjectProps> = ({data}) => {
+    const { aiHeadlines, setPaperOpen } = useUiStore()
+    const { touchOffsetY, handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchSwipe(() => closeOverlay())
     const [loadingImage, setLoadingImage] = useState<boolean>(true)
 
     const paperObjectRef = useRef<HTMLDivElement | null>(null)
     const [expanded, setExpanded] = useState<boolean>(false)
     const [overlayTop, setOverlayTop] = useState<number | null>(null)
-
-    const [touchOffsetY, setTouchOffsetY] = useState<number>(0);
-    const touchStartY = useRef<number | null>(null);
+    const [closing, setClosing] = useState<boolean>(false)
+    
+    const overlay = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         window.addEventListener('keydown', handleKeyPress, true)
@@ -47,49 +49,28 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
                 break
         }
     }
-
-    const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-        touchStartY.current = e.touches[0].clientY
-    };
-    
-    const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-        if (!touchStartY.current) return
-        e.stopPropagation()
-        const currentY = e.touches[0].clientY
-        const deltaY = Math.abs(currentY) - Math.abs(touchStartY.current)        
-    
-        const target = e.currentTarget;
-        if (target.scrollTop <= 0 && deltaY > 0) {
-            setTouchOffsetY(deltaY)
-        }
-    };
-    
-    const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-        if (touchOffsetY > 80) {
-            closeOverlay()
-        }
-        setTouchOffsetY(0)
-        touchStartY.current = null
-    };
     
     const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
             if (!expanded) {
                 setOverlayTop(null)
+                setClosing(false)
             }
         }
     }
 
     const handleImageClick = (e: React.MouseEvent<HTMLImageElement>) => {
         if (!paperObjectRef.current) return
-        const rect = paperObjectRef.current.getBoundingClientRect()
+        const rect: DOMRect = paperObjectRef.current.getBoundingClientRect()
         setOverlayTop(rect.top)
         setPaperOpen(true)
     }
 
     const closeOverlay = () => {
         setExpanded(false)
+        setClosing(true)
         setPaperOpen(false)
+        if (overlay.current) scrollToTop(overlay.current, 100)
     }
 
     return (
@@ -147,6 +128,8 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
                     top: expanded ? `${touchOffsetY}px` : `${overlayTop}px`,
                     WebkitOverflowScrolling: 'touch'
                 }}
+                ref={overlay}
+                onScroll={e => closing && e.preventDefault()}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}>
@@ -215,15 +198,14 @@ const PaperObject: React.FC<PaperObjectProps> = ({data, onImageClick}) => {
                                     )
                                 })}
                             </div>
+                            <Button 
+                                variant='ghost'
+                                className={`fixed bg-black/10 text-white rounded-full aspect-square w-auto h-auto ease-out-learn transition-all
+                                    ${expanded ? 'opacity-100 scale-100 top-4 right-4 duration-300' : 'opacity-0 scale-75 top-8 right-8 duration-300'}`}
+                                onClick={() => closeOverlay()}>
+                                    <XCircle className="size-4" />
+                            </Button>
                         </div>
-
-                        <Button 
-                            variant='ghost'
-                            className={`absolute text-white ease-out-learn transition-all
-                                ${expanded ? 'opacity-100 scale-100 top-4 right-4 duration-300' : 'opacity-0 scale-75 top-8 right-8 duration-300'}`}
-                            onClick={() => closeOverlay()}>
-                                <XCircle className="size-4" />
-                        </Button>
                     </div>
             </div>
         </div>
