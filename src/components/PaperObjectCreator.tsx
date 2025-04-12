@@ -1,3 +1,4 @@
+import { UserCircle2 } from 'lucide-react'
 import { useState } from 'react'
 
 interface PaperObjectCreatorProps {
@@ -12,19 +13,19 @@ const PaperObjectCreator: React.FC<PaperObjectCreatorProps> = ({ creator }) => {
     const words = creator.split(' ')
     const truncatedText = words.slice(0, 5).join(' ')
     const needsTruncation = words.length > 5
-    const displayText = showFullText ? creator : truncatedText
+    const displayText = (showFullText ? creator : truncatedText).replace(/^[,\s]+|[,\s]+$/g, "")
 
     return (
         <div className="creator-display">
-            <div className=''>
-                Written by: {displayText}
+            <div className='flex items-start gap-1'>
+                <UserCircle2 className='size-4 shrink-0'/> {displayText}
                 {needsTruncation && (
                     <div className='inline'>
                         <span>, </span>
                         <button 
                             onClick={() => setShowFullText(!showFullText)}
                             className="inline underline text-nowrap">
-                            {showFullText ? 'Show less' : 'Show more'}
+                            {showFullText ? 'Less' : 'More'}
                         </button>
                     </div>
                 )}

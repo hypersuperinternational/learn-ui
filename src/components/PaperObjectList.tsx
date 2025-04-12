@@ -13,7 +13,7 @@ const PaperObjectList: React.FC<PaperObjectListProps> = () => {
 
     return (
         <div className="paper-object-list-container relative w-full h-full">
-            <div className="paper-object-list flex flex-col gap-4">
+            <div className="paper-object-list flex flex-col gap-8">
                 {items.map((item:any, index:number) => {
                     return (
                         <PaperObject data={item} key={index} />
