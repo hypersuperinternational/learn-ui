@@ -33,6 +33,8 @@ const DataFetcher: React.FC = () => {
                 if (data.length) {
                     appendItems(data)
                     setLastFetchedPage(page)
+                } else {
+                    setItems([])
                 }
             } catch (err) {
                 console.error('Error fetching data:', err)
@@ -42,7 +44,7 @@ const DataFetcher: React.FC = () => {
         }
 
         fetchData()
-    }, [page, lastFetchedPage])
+    }, [page, lastFetchedPage, paperDatabase])
 
     useEffect(() => {
         setItems([])

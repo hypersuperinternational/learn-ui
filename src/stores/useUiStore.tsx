@@ -3,7 +3,8 @@ import { persist } from 'zustand/middleware'
 
 export enum PAPER_DATABASES {
   core = 'core_paper',
-  arxiv = 'n8n_table'
+  arxiv = 'n8n_table',
+  eup = 'europe_paper'
 }
 
 interface UiStoreProps {

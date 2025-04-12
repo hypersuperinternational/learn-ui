@@ -19,6 +19,14 @@ const PaperObjectList: React.FC<PaperObjectListProps> = () => {
                         <PaperObject data={item} key={index} />
                     )
                 })}
+                {(!items.length && !loading) &&
+                    <div className="flex flex-col items-center justify-center p-4 text-xs font-medium">
+                        <div style={{fontSize: '70px'}}>
+                            &#128583;
+                        </div> 
+                        Sorry, nothing in here at the moment.
+                    </div>
+                }
                 {loading && 
                     <div className="flex items-center justify-center p-4">
                         <Loader className="h-4 w-4 animate-spin" />

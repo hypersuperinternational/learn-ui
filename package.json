@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "bun --hot src/index.tsx",
     "start": "NODE_ENV=production bun src/index.tsx",
-    "build": "bun run build.ts"
+    "build": "bun run build.ts",
+    "publish": "bun run build.ts && rsync -rv dist/ pgs.sh:/learn"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.0",
